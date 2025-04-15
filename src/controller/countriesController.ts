@@ -1,0 +1,11 @@
+import { Response, Request } from "express";
+import { fetchAllCountries } from "../services/countriesService.js";
+
+export const getAllCountries = async (req: Request, res: Response) => {
+  try {
+    const countries = await fetchAllCountries();
+    res.status(200).json(countries);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

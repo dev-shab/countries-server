@@ -1,12 +1,9 @@
 import express from "express";
+import countriesRouter from "./routes/countriesRoutes.js";
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.status(200).json({
-    message: "Hello fron Country Data",
-  });
-});
+app.use("/countries", countriesRouter);
 
 app.listen(3000, () => {
   console.log(`app listening to port 3000`);
