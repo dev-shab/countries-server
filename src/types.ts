@@ -33,3 +33,10 @@ export interface Country {
     symbol: string;
   };
 }
+
+export interface Filters {
+  name?: string;
+  capital?: string;
+  region?: string;
+  timezone?: string;
+}

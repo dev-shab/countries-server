@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../constants.js";
-import { Country, CountryResponse } from "../types.js";
+import { Country, CountryResponse, Filters } from "../types.js";
 
 const fetchFromApi = async () => {
   const response = await axios.get(BASE_URL);
@@ -33,4 +33,23 @@ export const fetchCountriesByRegion = async (region: string) => {
   return countries.filter(
     (country: Country) => country.region.toLowerCase() === region.toLowerCase()
   );
+};
+
+export const filterCountries = async (filters: Filters) => {
+  const countries = await fetchFromApi();
+  return countries.filter((country: Country) => {
+    const matchName = filters.name
+      ? country.name?.toLowerCase() === filters.name?.toLowerCase()
+      : true;
+    const matchCapital = filters.capital
+      ? country.capital?.toLowerCase() === filters.capital?.toLowerCase()
+      : true;
+    const matchRegion = filters.region
+      ? country.region?.toLowerCase() === filters.region?.toLowerCase()
+      : true;
+    const matchTimezone = filters.timezone
+      ? country.timezone?.toLowerCase() === filters.timezone?.toLowerCase()
+      : true;
+    return matchName && matchCapital && matchRegion && matchTimezone;
+  });
 };

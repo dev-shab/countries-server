@@ -1,8 +1,10 @@
 import { Response, Request } from "express";
+import { ParsedQs } from "qs";
 import {
   fetchAllCountries,
   fetchCountriesByRegion,
   fetchCountryByCode,
+  filterCountries,
 } from "../services/countriesService.js";
 
 export const getAllCountries = async (req: Request, res: Response) => {
@@ -43,5 +45,21 @@ export const getCountriesByRegion = async (req: Request, res: Response) => {
     }
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const searchCountries = async (req: Request, res: Response) => {
+  try {
+    const filters = {
+      name: req.query.name,
+      capital: req.query.capital,
+      region: req.query.region,
+      timezone: req.query.timezone,
+    };
+    const results = await filterCountries(JSON.parse(JSON.stringify(filters)));
+    res.status(200).json(results);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
   }
 };
