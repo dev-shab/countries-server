@@ -27,3 +27,10 @@ export const fetchCountryByCode = async (code: string) => {
     (country: Country) => country.code.toLowerCase() === code.toLowerCase()
   );
 };
+
+export const fetchCountriesByRegion = async (region: string) => {
+  const countries = await fetchFromApi();
+  return countries.filter(
+    (country: Country) => country.region.toLowerCase() === region.toLowerCase()
+  );
+};
