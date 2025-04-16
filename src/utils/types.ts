@@ -40,3 +40,10 @@ export interface Filters {
   region?: string;
   timezone?: string;
 }
+
+export interface CacheRecord {
+  data: Country[];
+  expiry: number;
+}
+
+export type cache = Record<string, CacheRecord>;

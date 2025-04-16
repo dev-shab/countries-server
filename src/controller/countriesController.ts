@@ -1,5 +1,4 @@
 import { Response, Request } from "express";
-import { ParsedQs } from "qs";
 import {
   fetchAllCountries,
   fetchCountriesByRegion,

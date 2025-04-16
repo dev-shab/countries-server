@@ -1,8 +1,13 @@
 import axios from "axios";
-import { BASE_URL } from "../constants.js";
-import { Country, CountryResponse, Filters } from "../types.js";
+import { BASE_URL, CACHE_KEY } from "../utils/constants.js";
+import { Country, CountryResponse, Filters } from "../utils/types.js";
+import { getCache, setCache } from "../utils/cache.js";
 
 const fetchFromApi = async () => {
+  const cachedCountries = getCache(CACHE_KEY);
+  if (cachedCountries) {
+    return cachedCountries;
+  }
   const response = await axios.get(BASE_URL);
   const processedResponse = response.data.map((country: CountryResponse) => ({
     name: country.name?.common,
@@ -14,6 +19,7 @@ const fetchFromApi = async () => {
     flag: country.flags?.png || country.flags?.svg,
     currency: Object.keys(country.currencies || {})[0],
   }));
+  setCache(CACHE_KEY, processedResponse);
   return processedResponse;
 };
 
