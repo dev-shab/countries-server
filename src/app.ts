@@ -8,3 +8,5 @@ app.use("/countries", countriesRouter);
 app.listen(3000, () => {
   console.log(`app listening to port 3000`);
 });
+
+export default app;
